@@ -12,6 +12,7 @@ Output-page:
 ![#](screenshot_images/g_output.png "result page")
 
 ## Folder Structure:
+```
 parent-folder
 └── app
 |    └── dustbin (# for personal use #debugging & testing)
@@ -32,3 +33,4 @@ parent-folder
 └── Dockerfile (# dockerfile to build a docker app)
 └── kubernetes-config.yml (# kubernetes config file)
 └── Readme.md
+```
