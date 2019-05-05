@@ -1,0 +1,31 @@
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: github-app
+  labels:
+    type: github-testing
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        type: github-app
+        tier: action-point
+        version: v1
+    spec:
+      containers:
+      - name: github-app
+        image: gcr.io/greendeck-project/github-testing:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /_ah/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 1

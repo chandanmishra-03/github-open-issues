@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {#    Importing js library for google plot#}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    {#    code to plot 2 different plots 1) issues type distribution 2) word_frequency distribution#}
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+
+        function drawChart() {
+            plot_data = {{ data_from_server }};
+            plot_data1 = {{ total_issues_token_distribution | safe}};
+            console.log(plot_data);
+            var data = google.visualization.arrayToDataTable([['open issues interval', 'no of issues', 'size'], ["no_total_issues", plot_data[0], plot_data[0]], ["no_open_issues_24", plot_data[1], plot_data[1]], ["no_open_issues_24_to_7", plot_data[2], plot_data[2]], ["no_open_issues_more_than_7", plot_data[3], plot_data[3]]]);
+            var data1 = google.visualization.arrayToDataTable(plot_data1);
+            var options = {
+                title: 'Github repo issues.',
+                bubble: {
+                    textStyle: {fontSize: 11},
+                    colorAxis: {colors: ['yellow', 'red']}
+                }
+            };
+            var options1 = {
+                title: 'Issues key words distribution.',
+                bubble: {
+                    textStyle: {fontSize: 11},
+                    colorAxis: {colors: ['yellow', 'red']}
+                }
+            };
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('issues_distribution_chart'));
+            chart.draw(data, options);
+            var chart1 = new google.visualization.BubbleChart(document.getElementById('token_distribution_chart'));
+            chart1.draw(data1, options1);
+        }
+
+
+    </script>
+
+    <title>Github status</title>
+
+    <meta charset="utf-8">
+    <style>
+        {#        setting a gradient for background as I love gradients to use :)#}
+        body {
+            background: #C04848;
+            background: -webkit-linear-gradient(to right, #480048, #C04848); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #480048, #C04848); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        input[type=text], select {
+
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            width: 50%;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            background-color: black;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        label {
+            margin-top: 16px;
+            display: block;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+
+        .submit {
+            margin-top: 10px;
+        }
+
+        .container {
+
+            border-radius: 25px;
+            background-color: rgba(242, 242, 242, 0.7);
+
+            padding: 20px;
+            width: 1170px;
+            margin: 40px auto;
+            width: 70%;
+
+        }
+
+        .message .error {
+            color: red;
+        }
+
+
+        #contact-form .disabled {
+            color: white;
+            align: center;
+            background: gray;
+        }
+
+        @media (max-width: 1169px) {
+            .container {
+                width: 80%;
+            }
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+<div class="container">
+    <h1> GIT-Info</h1>
+    {#adding form to take github link as input#}
+    <form id="contact-form" action="/git_query" method="post">
+
+        <input type="text" name="git_repo" placeholder="Enter your public repo link.." required>
+        <input type="submit" value="Submit">
+
+        <br><br>
+    </form>
+    <hr>
+    {#    showing results in table#}
+    <div style="visibility: {{ table_visiblity }}">
+        <div><h3>Welcome! Here is your details.</h3></div>
+        <table>
+
+            <tr>
+                <th>open issues interval</th>
+                <th>no of issues</th>
+
+            </tr>
+            <tr>
+                <td> Total issues</td>
+                <td>{{ no_total_issues }}</td>
+            </tr>
+            <tr>
+
+                <td> opened in the last 24 hours</td>
+                <td>{{ no_open_issues_24 }}</td>
+            </tr>
+            <tr>
+                <td> opened more than 24 hours ago but less than 7 days ago</td>
+                <td>{{ no_open_issues_24_to_7 }}</td>
+
+            </tr>
+            <tr>
+                <td> more than 7 days ago</td>
+                <td>{{ no_open_issues_more_than_7 }}</td>
+
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+{#showing plots#}
+<div id="issues_distribution_chart"
+     style="width: 600px; height: 400px;float:left;margin: 10px; visibility: {{ graph_visibility }}"></div>
+<div id="token_distribution_chart"
+     style="width: 600px; height: 400px;float:right;margin: 10px; visibility: {{ graph_visibility }}"></div>
+</body>
+</html>
