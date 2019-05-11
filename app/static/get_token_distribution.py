@@ -12,7 +12,7 @@ nltk.download('stopwords')
 def token_distribution(total_issues):
     # each item in total_issues is a class item. by item.key we can access the particular key value
     # here I am extracting only titles of all issues & joining them as a single sentences
-    total_issues_titles = ' . '.join([i.title for i in total_issues])
+    total_issues_titles = ' . '.join(total_issues)
     # dictionary of english stopwords
     stop_words = set(stopwords.words('english'))
     # removing punctuation
