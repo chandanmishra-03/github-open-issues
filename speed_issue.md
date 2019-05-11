@@ -41,7 +41,7 @@ processes:
 ** As I was using global variables just to clean buffer after every call Wrote a function to clear those lists and values.
 
 
-![#](screenshot_images/t2.png "multithreading").
+![#](screenshot_images/t3.png "multithreading").
 
 ** ideal condition says for each iteration with ***n*** no of threads, list of data should be ***(10 to 20) mul n***
 
@@ -49,14 +49,14 @@ processes:
 
 #### for visualization purpose I have added the actual duration in sec for a perticular request to app.
 as eg:
-![#](screenshot_images/t6.png "request example").
+![#](screenshot_images/t4.png "request example").
 
 
 
 ### Warning:
 I noticed during my work there is a rate limit for github api request. For Authenticated user its 5k/hr and for unauthenticate users its 50/hr.
 
-![#](screenshot_images/t5.png "requests rate limit").
+![#](screenshot_images/t6.png "requests rate limit").
 
 I have not tried to solve this issue but We can solve this by applying rotating proxies.
 
