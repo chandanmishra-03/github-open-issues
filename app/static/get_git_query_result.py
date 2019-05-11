@@ -82,10 +82,10 @@ def get_git_issues_count(repo_name):
         maximum_number = int(response.headers["link"].split("page=")[-1].split(">")[0])
         t_url = "=".join(pages["last"].split("=")[:-1]) + "="
         page_numbers = [t_url + str(i + 2) for i in range(maximum_number)]
-        thread = min(int(len(page_numbers) / 2) + 1, 30)
-        for batch in range(0, len(page_numbers), 30 * 10):
+        thread = min(int(len(page_numbers) / 2) + 1, 70)
+        for batch in range(0, len(page_numbers), 70 * 10):
             pool = ThreadPool(thread)
-            items = (json.loads(response.text))[batch:batch + (30 * 10)]
+            items = (json.loads(response.text))[batch:batch + (70 * 10)]
             p_results = pool.map(multi_request, page_numbers)
 
             pool.close()
