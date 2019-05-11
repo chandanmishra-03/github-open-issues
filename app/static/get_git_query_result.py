@@ -17,9 +17,10 @@ open_issues_24_to_7 = []
 open_issues_more_than_7 = []
 total_issues_titles = []
 
-querystring = {"filter": "all", "access_token": "fa6c840106c750f0f636b75069944d16dd1c1cc9"}
+querystring = {"filter": "all"}
 payload = ""
 headers = {
+    'Authorization': "Basic SUlJVGlhbi1DaGFuZGFuOmJhcHVudTEyMw==",
     'cache-control': "no-cache",
     'Postman-Token': "3b82e2ee-fe4f-4c57-8ea7-901de83c62f3"
 }
@@ -29,8 +30,6 @@ g = Github("IIITian-Chandan", "bapunu123")  # I have hidden it for security issu
 
 
 def multi_request(url_page):
-
-
     # querystring["page"] = page_no
     response = requests.request("GET", url_page, data=payload, headers=headers, params=querystring)
     temp_results.append(json.loads(response.text))
@@ -73,7 +72,7 @@ def get_git_issues_count(repo_name):
     response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
 
     results = json.loads(response.text)
-
+    print(results)
     try:
         if 'link' in response.headers:
             pages_url = []
@@ -150,6 +149,6 @@ def get_git_issues_count(repo_name):
 
     # here we are also returning all total issues that will help us to extract word frequency distribution
     end_time = datetime.now().timestamp()
-    duration = str(end_time-start_time)
+    duration = str(end_time - start_time)
     clear_buffer()
-    return output_1, output_2, output_3, output_4, output_5,duration
+    return output_1, output_2, output_3, output_4, output_5, duration
