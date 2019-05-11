@@ -46,13 +46,22 @@ processes:
 ** ideal condition says for each iteration with ***n*** no of threads, list of data should be ***(10 to 20) mul n***
 
 
+
 #### for visualization purpose I have added the actual duration in sec for a perticular request to app.
 as eg:
 ![#](screenshot_images/t4.png "request example").
 
 
-#### * I will be extremly thankfull for your compliment on how to make it more faster and smooth.
 
+### Warning:
+I noticed during my work there is a rate limit for github api request. For Authenticated user its 5k/hr and for unauthenticate users its 50/hr.
+
+![#](screenshot_images/t5.png "requests rate limit").
+
+I have not tried to solve this issue but We can solve this by applying rotating proxies.
+
+
+#### * I will be extremly thankfull for your compliment on how to make it more faster and smooth.
 
 
 # Thank You
