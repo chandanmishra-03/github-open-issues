@@ -36,6 +36,7 @@ def multi_request(url_page):
 
 
 def calculate(item):
+    # calculating all those required values based on time conditions
     try:
         if "pull_request" not in item.keys():
             total_issues.append(item)
@@ -74,7 +75,10 @@ def get_git_issues_count(repo_name):
     results = json.loads(response.text)
     print(results)
     try:
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if 'link' in response.headers:
+            # checking if link is there inside header or not
+            ## collecting all required next page urls
             pages_url = []
             pages = {i[6:-1]: j[j.index('<') + 1:-1] for j, i in
                      (link.split(';') for link in
@@ -82,15 +86,19 @@ def get_git_issues_count(repo_name):
         maximum_number = int(response.headers["link"].split("page=")[-1].split(">")[0])
         t_url = "=".join(pages["last"].split("=")[:-1]) + "="
         page_numbers = [t_url + str(i + 2) for i in range(maximum_number)]
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        # +++++++++++++++++++++++ Applying thread to for parallel requests to all those apis
         thread = min(int(len(page_numbers) / 2) + 1, 70)
         for batch in range(0, len(page_numbers), 70 * 10):
             pool = ThreadPool(thread)
             items = (json.loads(response.text))[batch:batch + (70 * 10)]
-            p_results = pool.map(multi_request, page_numbers)
+            p_results = pool.map(multi_request, items)
 
             pool.close()
             pool.join()
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+        # merging lists of lists
         results = list(itertools.chain.from_iterable(temp_results)) + results
 
     except:
@@ -149,6 +157,9 @@ def get_git_issues_count(repo_name):
 
     # here we are also returning all total issues that will help us to extract word frequency distribution
     end_time = datetime.now().timestamp()
+    # showing time taken for whole requests
     duration = str(end_time - start_time)
+
+    # cleaning buffer
     clear_buffer()
     return output_1, output_2, output_3, output_4, output_5, duration
