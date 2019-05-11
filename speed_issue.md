@@ -1,4 +1,5 @@
 # Solving Errors regarding slow requests
+# End-Point: http://104.197.43.20:8080
 
 ### problem: Previous sollution of this app was not able to collect data from repos with large no issues and the response was slow.
 Target Sollution: Making it work against all repos and increasing the speed of processes.
@@ -45,13 +46,22 @@ processes:
 ** ideal condition says for each iteration with ***n*** no of threads, list of data should be ***(10 to 20) mul n***
 
 
+
 #### for visualization purpose I have added the actual duration in sec for a perticular request to app.
 as eg:
 ![#](screenshot_images/t4.png "request example").
 
 
-#### * I will be extremly thankfull for your compliment on how to make it more faster and smooth.
 
+### Warning:
+I noticed during my work there is a rate limit for github api request. For Authenticated user its 5k/hr and for unauthenticate users its 50/hr.
+
+![#](screenshot_images/t5.png "requests rate limit").
+
+I have not tried to solve this issue but We can solve this by applying rotating proxies.
+
+
+#### * I will be extremly thankfull for your compliment on how to make it more faster and smooth.
 
 
 # Thank You
