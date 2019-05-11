@@ -1,4 +1,5 @@
 # Solving Errors regarding slow requests
+# End-Point: http://104.197.43.20:8080
 
 ### problem: Previous sollution of this app was not able to collect data from repos with large no issues and the response was slow.
 Target Sollution: Making it work against all repos and increasing the speed of processes.
