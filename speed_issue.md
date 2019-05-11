@@ -49,7 +49,7 @@ processes:
 
 #### for visualization purpose I have added the actual duration in sec for a perticular request to app.
 as eg:
-![#](screenshot_images/t4.png "request example").
+![#](screenshot_images/t6.png "request example").
 
 
 
